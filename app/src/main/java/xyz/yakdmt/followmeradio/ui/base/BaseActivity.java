@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import xyz.yakdmt.followmeradio.FollowMeApplication;
 import xyz.yakdmt.followmeradio.injection.component.ActivityComponent;
-import xyz.yakdmt.followmeradio.injection.component.DaggerActivityComponent;
 import xyz.yakdmt.followmeradio.injection.modules.ActivityModule;
 
 /**

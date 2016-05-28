@@ -13,5 +13,5 @@ import xyz.yakdmt.followmeradio.ui.main.MainActivity;
 public interface ActivityComponent {
 
     void inject(MainActivity mainActivity);
-    
+
 }

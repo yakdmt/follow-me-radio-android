@@ -49,6 +49,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
+    @ApplicationContext
     NetworkService provideNetworkService() {
         return NetworkService.Creator.newNetworkService();
     }
