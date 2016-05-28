@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "xyz.yakdmt.followmeradio"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+android {
+    compileOptions.incremental = false
+}
+
+buildscript {
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+    }
+}
+
+
+dependencies {
+    final DAGGER_VERSION = '2.4'
+    final RETROFIT_VERSION = '2.0.0-beta3'
+
+    def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile "com.android.support:appcompat-v7:23.2.1"
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
+    compile 'com.sothree.slidinguppanel:library:3.1.1'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    // APT dependencies
+    apt 'com.google.dagger:dagger-compiler:2.2'
+    provided 'javax.annotation:jsr250-api:1.0'
+
+}
+
+retrolambda {
+    println("***************** ---------- *******************")
+    println("JAVA_HOME: " + System.properties.'JAVA_HOME')
+    println("JAVA7_HOME: " + System.getenv("JAVA7_HOME"))
+    println("JAVA8_HOME: " + System.getenv("JAVA8_HOME"))
+    println("***************** ---------- *******************")
+}
+
+
