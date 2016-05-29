@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -45,10 +46,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivityComponent().inject(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        getActivityComponent().inject(this);
+        boolean injected = mMainPresenter != null;
+        Log.d("dagger", "injected = "+injected);
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
 
@@ -56,8 +58,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mViewPager.setAdapter(mMainPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mFab.setOnClickListener(v -> {
-            mMainPresenter.play();
+            mMainPresenter.onFabClick();
         });
+
     }
 
     public class MainPagerAdapter extends FragmentStatePagerAdapter {

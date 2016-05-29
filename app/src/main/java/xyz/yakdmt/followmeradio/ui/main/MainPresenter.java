@@ -3,7 +3,6 @@ package xyz.yakdmt.followmeradio.ui.main;
 import javax.inject.Inject;
 
 import rx.Subscription;
-import xyz.yakdmt.followmeradio.data.DataManager;
 import xyz.yakdmt.followmeradio.playback.PlaybackManager;
 import xyz.yakdmt.followmeradio.ui.base.BasePresenter;
 
@@ -12,13 +11,11 @@ import xyz.yakdmt.followmeradio.ui.base.BasePresenter;
  */
 public class MainPresenter extends BasePresenter<MainMvpView> {
 
-    private final DataManager mDataManager;
     private final PlaybackManager mPlaybackManager;
     private Subscription mSubscription;
 
     @Inject
-    public MainPresenter(DataManager dataManager, PlaybackManager playbackManager) {
-        mDataManager = dataManager;
+    public MainPresenter(PlaybackManager playbackManager) {
         mPlaybackManager = playbackManager;
     }
 
@@ -33,8 +30,8 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void play() {
-        mPlaybackManager.play();
+    public void onFabClick(){
+        mPlaybackManager.togglePlayback();
     }
 
 }

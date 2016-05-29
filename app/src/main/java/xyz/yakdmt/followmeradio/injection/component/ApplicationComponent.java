@@ -1,6 +1,5 @@
 package xyz.yakdmt.followmeradio.injection.component;
 
-import android.app.Application;
 import android.content.Context;
 
 import javax.inject.Singleton;
@@ -8,7 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import xyz.yakdmt.followmeradio.injection.ApplicationContext;
 import xyz.yakdmt.followmeradio.injection.modules.ApplicationModule;
-import xyz.yakdmt.followmeradio.network.NetworkService;
+import xyz.yakdmt.followmeradio.playback.AudioService;
 
 /**
  * Created by yakdmt on 09/04/16.
@@ -17,9 +16,9 @@ import xyz.yakdmt.followmeradio.network.NetworkService;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
 
-    void inject(NetworkService networkService);
+    void inject(AudioService audioService);
 
-    @ApplicationContext
-    Context context();
-    Application application();
+    AudioService audioService();
+    @ApplicationContext Context context();
+
 }

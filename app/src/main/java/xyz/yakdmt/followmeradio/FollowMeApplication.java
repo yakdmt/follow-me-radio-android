@@ -12,40 +12,23 @@ import xyz.yakdmt.followmeradio.injection.modules.ApplicationModule;
  */
 public class FollowMeApplication extends Application {
 
-
     ApplicationComponent mApplicationComponent;
-
 
     @Override
     public void onCreate() {
         super.onCreate();
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+    }
 
-        //if (BuildConfig.DEBUG) {
-            //Timber.plant(new Timber.DebugTree());
-           // Fabric.with(this, new Crashlytics());
-       //}
+    public ApplicationComponent getComponent() {
+        return mApplicationComponent;
     }
 
     public static FollowMeApplication get(Context context) {
         return (FollowMeApplication) context.getApplicationContext();
     }
 
-    public ApplicationComponent getComponent() {
-        if (mApplicationComponent == null) {
-            mApplicationComponent = DaggerApplicationComponent.builder()
-                    .applicationModule(new ApplicationModule(this))
-                    .build();
-        }
-        return mApplicationComponent;
-    }
-
-    // Needed to replace the component with a test specific one
-    public void setComponent(ApplicationComponent applicationComponent) {
-        mApplicationComponent = applicationComponent;
-    }
-
-    public void getApplicationComponent(){
-
-    }
 
 }

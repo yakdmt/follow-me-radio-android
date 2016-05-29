@@ -21,7 +21,7 @@ public class Constants {
     public static final String BITRATE_192 = "/live192";
 
     public static final String ACTION_PLAY = "com.yakdmt.action.PLAY";
-    public static final String ACTION_PAUSE = "com.yakdmt.action.PAUSE";
+    public static final String ACTION_STOP = "com.yakdmt.action.STOP";
     public static final String ACTION_INIT = "com.yakdmt.action.INIT";
 
     public static final String AUDIO_TYPE = "audio_type";

@@ -12,6 +12,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -23,11 +24,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "3g"
+        incremental true
+        dexInProcess = true
+    }
 }
 
-android {
-    compileOptions.incremental = false
-}
+
 
 buildscript {
 
@@ -51,7 +56,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:23.2.1"
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
-    compile "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
     compile 'com.sothree.slidinguppanel:library:3.1.1'
@@ -63,6 +67,7 @@ dependencies {
     // APT dependencies
     apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.android.support:multidex:1.0.1'
 
 }
 
