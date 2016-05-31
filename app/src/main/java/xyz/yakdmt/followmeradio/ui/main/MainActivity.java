@@ -16,6 +16,9 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -24,6 +27,7 @@ import xyz.yakdmt.followmeradio.R;
 import xyz.yakdmt.followmeradio.ui.base.BaseActivity;
 import xyz.yakdmt.followmeradio.ui.broadcast.BroadcastFragment;
 import xyz.yakdmt.followmeradio.ui.podcast.PodcastFragment;
+import xyz.yakdmt.followmeradio.utils.Event;
 
 /**
  * Created by yakdmt on 20/04/16.
@@ -61,6 +65,19 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             mMainPresenter.onFabClick();
         });
 
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        mMainPresenter.onActivityCreated();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     public class MainPagerAdapter extends FragmentStatePagerAdapter {
@@ -102,6 +119,19 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
             sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             return sb;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(Event.OnServiceBound event) {
+        refreshFabIcon(event.getState());
+    };
+
+    private void refreshFabIcon(int state){
+        if (state==0) {
+            mFab.setImageResource(R.drawable.ic_play_arrow_white_24dp);
+        } else {
+            mFab.setImageResource(R.drawable.ic_pause_white_24dp);
         }
     }
 

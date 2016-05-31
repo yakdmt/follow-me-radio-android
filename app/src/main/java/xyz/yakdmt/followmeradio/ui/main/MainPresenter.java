@@ -34,4 +34,8 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         mPlaybackManager.togglePlayback();
     }
 
+    public void onActivityCreated(){
+        mPlaybackManager.doBindService();
+    }
+
 }

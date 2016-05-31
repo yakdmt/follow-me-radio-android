@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 import xyz.yakdmt.followmeradio.injection.ApplicationContext;
 import xyz.yakdmt.followmeradio.utils.Constants;
+import xyz.yakdmt.followmeradio.utils.Event;
 
 /**
  * Created by yakdmt on 21/04/16.
@@ -34,9 +37,11 @@ public class PlaybackManager {
             @Override
             public void onServiceConnected(ComponentName name, IBinder binder) {
                 mBinder = (AudioService.AudioBinder)binder;
+
                 if (isNeedStopPlayback) {
-                    mBinder.startPlayback(getStopIntent());
+                    mBinder.stopPlayback();
                     isNeedStopPlayback = false;
+                    EventBus.getDefault().post(Event.OnServiceBound.STATE_IDLE);
                 }
             }
 
@@ -85,6 +90,7 @@ public class PlaybackManager {
         if (!AudioService.isWorking()) {
             mContext.startService(getCurrentPlayIntent());
             doBindService(getBindIntent());
+            EventBus.getDefault().post(new Event.OnServiceBound(Event.OnServiceBound.STATE_PLAYING));
             return;
         }
         if (!isServiceBound()) {
@@ -94,13 +100,19 @@ public class PlaybackManager {
         }
         if (mBinder.isPlaying()) {
             mBinder.stopPlayback();
+            EventBus.getDefault().post(new Event.OnServiceBound(Event.OnServiceBound.STATE_IDLE));
         } else {
             mBinder.startPlayback(getCurrentPlayIntent());
+            EventBus.getDefault().post(new Event.OnServiceBound(Event.OnServiceBound.STATE_PLAYING));
         }
     }
 
     public void doBindService(Intent intent) {
         mContext.bindService(intent, mServerConnection, 0);
+    }
+
+    public void doBindService() {
+        mContext.bindService(getBindIntent(), mServerConnection, 0);
     }
 
     private boolean isServiceBound(){
