@@ -5,14 +5,14 @@ package xyz.yakdmt.followmeradio.utils;
  */
 public class Event {
 
-    public static class OnServiceBound {
+    public static class OnAudioStateChanded {
 
         public static final int STATE_IDLE = 0;
         public static final int STATE_PLAYING = 1;
 
         private int mState;
 
-        public OnServiceBound(int state) {
+        public OnAudioStateChanded(int state) {
             mState = state;
         }
 

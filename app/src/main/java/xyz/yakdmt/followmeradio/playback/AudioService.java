@@ -13,11 +13,14 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 
 import xyz.yakdmt.followmeradio.FollowMeApplication;
 import xyz.yakdmt.followmeradio.ui.main.MainActivity;
 import xyz.yakdmt.followmeradio.utils.Constants;
+import xyz.yakdmt.followmeradio.utils.Event;
 
 /**
  * Created by yakdmt on 20/04/16.
@@ -107,6 +110,7 @@ public class AudioService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onPrepared(MediaPlayer mp) {
         mMediaPlayer.start();
+        EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_PLAYING));
     }
 
     @Override

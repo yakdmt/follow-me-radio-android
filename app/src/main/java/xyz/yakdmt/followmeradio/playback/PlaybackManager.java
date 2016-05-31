@@ -26,7 +26,6 @@ public class PlaybackManager {
     public static String[] BITRATES = {Constants.BITRATE_32, Constants.BITRATE_64, Constants.BITRATE_128, Constants.BITRATE_192};
     private String mCurrentQuality = Constants.BITRATE_192;
     private String mCurrentStream = Constants.STREAM_NEW;
-    private boolean isNeedStopPlayback = false;
 
 
     @Inject
@@ -37,11 +36,10 @@ public class PlaybackManager {
             @Override
             public void onServiceConnected(ComponentName name, IBinder binder) {
                 mBinder = (AudioService.AudioBinder)binder;
-
-                if (isNeedStopPlayback) {
-                    mBinder.stopPlayback();
-                    isNeedStopPlayback = false;
-                    EventBus.getDefault().post(Event.OnServiceBound.STATE_IDLE);
+                if (mBinder.isPlaying()) {
+                    EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_PLAYING));
+                } else {
+                    EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_IDLE));
                 }
             }
 
@@ -62,8 +60,7 @@ public class PlaybackManager {
     }
 
     public Intent getBindIntent(){
-        Intent startIntent = new Intent(mContext, mAudioService.getClass());
-        return startIntent;
+        return new Intent(mContext, mAudioService.getClass());
     }
 
     public Intent getStopIntent(){
@@ -90,20 +87,14 @@ public class PlaybackManager {
         if (!AudioService.isWorking()) {
             mContext.startService(getCurrentPlayIntent());
             doBindService(getBindIntent());
-            EventBus.getDefault().post(new Event.OnServiceBound(Event.OnServiceBound.STATE_PLAYING));
-            return;
-        }
-        if (!isServiceBound()) {
-            isNeedStopPlayback = true;
-            mContext.bindService(getStopIntent(), mServerConnection, 0);
             return;
         }
         if (mBinder.isPlaying()) {
             mBinder.stopPlayback();
-            EventBus.getDefault().post(new Event.OnServiceBound(Event.OnServiceBound.STATE_IDLE));
+            EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_IDLE));
         } else {
             mBinder.startPlayback(getCurrentPlayIntent());
-            EventBus.getDefault().post(new Event.OnServiceBound(Event.OnServiceBound.STATE_PLAYING));
+            EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_PLAYING));
         }
     }
 
