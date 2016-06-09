@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -29,6 +30,9 @@ android {
         javaMaxHeapSize "3g"
         incremental true
         dexInProcess = true
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -68,6 +72,7 @@ dependencies {
     apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.android.support:multidex:1.0.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 }
 
@@ -77,6 +82,9 @@ retrolambda {
     println("JAVA7_HOME: " + System.getenv("JAVA7_HOME"))
     println("JAVA8_HOME: " + System.getenv("JAVA8_HOME"))
     println("***************** ---------- *******************")
+}
+repositories {
+    mavenCentral()
 }
 
 

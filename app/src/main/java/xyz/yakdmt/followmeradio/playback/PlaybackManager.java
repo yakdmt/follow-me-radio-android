@@ -37,9 +37,9 @@ public class PlaybackManager {
             public void onServiceConnected(ComponentName name, IBinder binder) {
                 mBinder = (AudioService.AudioBinder)binder;
                 if (mBinder.isPlaying()) {
-                    EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_PLAYING));
+                    EventBus.getDefault().post(new Event.OnAudioStateChanged(Event.OnAudioStateChanged.STATE_PLAYING));
                 } else {
-                    EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_IDLE));
+                    EventBus.getDefault().post(new Event.OnAudioStateChanged(Event.OnAudioStateChanged.STATE_IDLE));
                 }
             }
 
@@ -91,10 +91,10 @@ public class PlaybackManager {
         }
         if (mBinder.isPlaying()) {
             mBinder.stopPlayback();
-            EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_IDLE));
+            EventBus.getDefault().post(new Event.OnAudioStateChanged(Event.OnAudioStateChanged.STATE_IDLE));
         } else {
             mBinder.startPlayback(getCurrentPlayIntent());
-            EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_PLAYING));
+            EventBus.getDefault().post(new Event.OnAudioStateChanged(Event.OnAudioStateChanged.STATE_PLAYING));
         }
     }
 

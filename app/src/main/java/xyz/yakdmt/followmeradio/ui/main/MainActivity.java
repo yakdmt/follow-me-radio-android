@@ -123,7 +123,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Subscribe
-    public void onEvent(Event.OnAudioStateChanded event) {
+    public void onEvent(Event.OnAudioStateChanged event) {
         refreshFabIcon(event.getState());
     };
 

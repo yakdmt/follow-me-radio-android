@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme" >
 
         <service android:name=".playback.AudioService"/>
+        <service android:name=".network.NetworkWorker"/>
 
         <activity
             android:name=".ui.main.MainActivity"

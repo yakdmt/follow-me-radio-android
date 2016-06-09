@@ -110,7 +110,7 @@ public class AudioService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onPrepared(MediaPlayer mp) {
         mMediaPlayer.start();
-        EventBus.getDefault().post(new Event.OnAudioStateChanded(Event.OnAudioStateChanded.STATE_PLAYING));
+        EventBus.getDefault().post(new Event.OnAudioStateChanged(Event.OnAudioStateChanged.STATE_PLAYING));
     }
 
     @Override
