@@ -65,6 +65,7 @@ dependencies {
     compile 'com.sothree.slidinguppanel:library:3.1.1'
     compile 'com.android.support:design:23.3.0'
     compile 'com.jakewharton:butterknife:7.0.1'
+
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
@@ -73,7 +74,7 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.android.support:multidex:1.0.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 retrolambda {

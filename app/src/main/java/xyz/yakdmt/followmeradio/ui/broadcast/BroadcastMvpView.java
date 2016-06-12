@@ -1,5 +1,6 @@
 package xyz.yakdmt.followmeradio.ui.broadcast;
 
+import xyz.yakdmt.followmeradio.data.local.TrackInfo;
 import xyz.yakdmt.followmeradio.ui.base.MvpView;
 
 /**
@@ -7,5 +8,6 @@ import xyz.yakdmt.followmeradio.ui.base.MvpView;
  */
 public interface BroadcastMvpView extends MvpView {
 
-    void refreshInfo();
+    void refreshInfo(TrackInfo trackInfo);
+
 }
